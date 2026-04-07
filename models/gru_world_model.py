@@ -199,12 +199,12 @@ class GRUWorldModel(nn.Module):
 
 
 def _weighted_loss(losses: dict) -> torch.Tensor:
-    """Same weighting as vae_recon_loss: energy×10, relationships×10."""
+    """Same weighting as vae_recon_loss: energy×10, relationships×10, knowledge×0.5."""
     return (losses["location"]
             + losses["mood"]
-            + losses["energy"]       * 10.0
+            + losses["energy"]        * 10.0
             + losses["goal"]
-            + losses["knowledge"]
+            + losses["knowledge"]     * 0.5
             + losses["relationships"] * 10.0
             + losses["time"]
             + losses["weather"]

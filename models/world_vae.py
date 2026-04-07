@@ -126,7 +126,7 @@ def vae_recon_loss(component_losses: dict) -> torch.Tensor:
         + component_losses["mood"]                # 1× CE
         + component_losses["energy"] * 10.0       # MSE: upweight to match CE scale
         + component_losses["goal"]                # 1× CE
-        + component_losses["knowledge"]            # BCE (sparse multi-hot — not upweighted)
+        + component_losses["knowledge"] * 0.5     # BCE with pos_weight=10; scale down to not dominate
         + component_losses["relationships"] * 10.0  # MSE: upweight to match CE scale
         + component_losses["time"]                # CE
         + component_losses["weather"]             # CE

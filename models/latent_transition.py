@@ -146,7 +146,7 @@ def train(
                     + losses["mood"]
                     + losses["energy"] * 10.0
                     + losses["goal"]
-                    + losses["knowledge"]
+                    + losses["knowledge"] * 0.5
                     + losses["relationships"] * 10.0
                     + losses["time"]
                     + losses["weather"]
@@ -188,7 +188,7 @@ def train(
                                      + losses["mood"]
                                      + losses["energy"] * 10.0
                                      + losses["goal"]
-                                     + losses["knowledge"]
+                                     + losses["knowledge"] * 0.5
                                      + losses["relationships"] * 10.0
                                      + losses["time"]
                                      + losses["weather"]

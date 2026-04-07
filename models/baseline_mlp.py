@@ -194,9 +194,12 @@ def component_loss(pred_flat: torch.Tensor, target_batch: dict,
         pred_goal.reshape(-1, len(GOALS)), tgt_goal.reshape(-1))
 
     # Knowledge: binary cross-entropy (multi-hot)
+    # pos_weight=10 compensates for ~90% negative rate (chars know 0-3 of 20 facts)
     pred_know = pred_chars[:, :, goal_end:know_end]
     tgt_know  = tgt_chars[:, :, goal_end:know_end]
-    losses["knowledge"] = F.binary_cross_entropy_with_logits(pred_know, tgt_know)
+    pos_weight = torch.full(pred_know.shape[-1:], 10.0, device=pred_know.device)
+    losses["knowledge"] = F.binary_cross_entropy_with_logits(
+        pred_know, tgt_know, pos_weight=pos_weight)
 
     # ── Relationships: MSE ──
     losses["relationships"] = F.mse_loss(pred_rels, tgt_rels)
